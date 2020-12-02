@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            *,
+            *:before,
+            *:after {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                background-color: #252525;
+                color: #fff;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 28px;
+            }
+
+            input[type="text"] {
+                outline: none;
+                border: none;
+                font-size: 28px;
+                width: 120px;
+                color: #fff;
+                padding: 10px 15px;
+                background-color: rgba(0, 0, 0, .2);
+                border-radius: 5px;
+                border: 1px solid rgba(0, 0, 0, .5)
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            .app-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            #result {
+                margin-top: 20px;
+                font-size: 40px;
+            }
+        </style>
+        <script>
+
+            function gcd(a, b) {
+                return a == b ? a : gcd(a > b ? a - b : a, b > a ? b - a : b);
+            }
+
+            function ratio(w, h) {
+                var d = gcd(w, h);
+                return (w/d) + ':' + (h/d);
+            }
+
+            function setResult(element, width, height) {
+                if ((width == '' || height == '') || !(width || height)) return;
+                element.innerHTML = ratio(parseInt(width), parseInt(height));
+            }
+
+            window.addEventListener('DOMContentLoaded', function () {
+                var widthInput = document.getElementById('width');
+                var heightInput = document.getElementById('height');
+                var resultElement = document.getElementById('result');
+
+                setResult(resultElement, widthInput.value, heightInput.value)
+
+                var inputs = document.getElementsByTagName('input');
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].addEventListener('keyup', function () {
+                        setResult(resultElement, widthInput.value, heightInput.value);
+                    })
+                }
+            })
+        </script>
+    </head>
+    <body>
+        <div class="app-container">
+            <div>
+                <input id="width" type="text" class="text-center" value="1920" />
+                <input id="height" type="text" class="text-center" value="1080" />
+            </div>
+            <div id="result" class="text-center">
+                <span></span>:<span></span>
+            </div>
+        </div>
+    </body>
+</html>
